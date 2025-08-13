@@ -1,0 +1,40 @@
+body{
+    background-color: #07a4f2e9;
+    font-family: Arial, sans-serif;
+}
+.div1 {
+    margin: 10px;
+    height: 50vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+header{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    padding: 20px;
+    background-color: antiquewhite;
+    box-shadow: 0 4px 8px rgba(10, 216, 82, 0.2);
+    width:100%;
+}
+button{
+    height: 50px;
+    width: 100px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: lightgray;
+    cursor: pointer;
+}
+#but {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    padding: 20px;
+    width:100%;
+}

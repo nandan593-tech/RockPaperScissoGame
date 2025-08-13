@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
  </head>
  <body>
-    <button onclick="playgame('rock');
-     
-    ">Rock</button>
-    <button onclick="playgame('paper');
-    ">Paper</button>
-    <button onclick="playgame('scissors');">Scissors</button>
-    <button onclick="score.win=0; score.ties=0; score.loss=0;">Reset score</button>
+    <header>
+        <h1>Rock Paper Scissors</h1>
+    </header>
+    <main>
+        <div  class="div1">
+            <button onclick="playgame('rock');">Rock</button>
+            <button onclick="playgame('paper');">Paper</button>
+            <button onclick="playgame('scissors');">Scissors</button>
+        </div>
+        <div id="but">
+            <button onclick="score.win=0; score.ties=0; score.loss=0;">Reset score</button>
+        </div>
+    </main>
 
     <script>
         const score={
