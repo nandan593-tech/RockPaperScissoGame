@@ -17,16 +17,14 @@
             <button onclick="playgame('scissors');">Scissors</button>
         </div>
         <div id="but">
-            <button onclick="score.win=0; score.ties=0; score.loss=0;">Reset score</button>
+            <button onclick="score.win=0; score.ties=0; score.loss=0;
+            localStorage.removeItem('score');">Reset score</button>
         </div>
     </main>
 
     <script>
-        const score={
-            win: 0,
-            ties: 0,
-            loss: 0,
-        };
+        let score = JSON.parse(localStorage.getItem("score"))||{ win: 0, ties: 0, loss: 0 };
+
         function playgame(playermove) {
             const computerguess = fun1();
             let result = "";
@@ -66,6 +64,7 @@
             } else if(result === 'You lose!') {
                 score.loss++;
             }
+            localStorage.setItem("score", JSON.stringify(score));
             alert(`You picked ${playermove}, the computer picked ${computerguess}. ${result}
 wins: ${score.win}, ties: ${score.ties}, losses: ${score.loss}`);
         }
