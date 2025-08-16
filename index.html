@@ -1,87 +1,84 @@
- <!DOCTYPE html>
- <html lang="en">
- <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
- </head>
- <body>
-    <header>
-        <h1>Rock Paper Scissors</h1>
-    </header>
+    <style>
+        #playBtn{
+            height:80px;
+            width:80px;
+        }
+        .gameBtn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+   
     <main>
-        <div  class="div1">
-            <button onclick="playgame('rock');">Rock</button>
-            <button onclick="playgame('paper');">Paper</button>
-            <button onclick="playgame('scissors');">Scissors</button>
+        <div class="header1">
+            <h1>Rock Paper Scissors</h1>
+            <button  class="play" id="playBtn">Let's Play</button>
+        </div>
+        <div class="div1">
+            <button class="gameBtn" onclick="playgame('rock');" disabled><img class="image" src="rock.png" alt="Rock"></button>
+            <button class="gameBtn" onclick="playgame('paper');" disabled><img class="image" src="paper.png" alt="Paper"></button>
+            <button class="gameBtn" onclick="playgame('scissors');" disabled><img class="image" src="scissors.png" alt="Scissors"></button>
         </div>
         <div id="but">
             <button onclick="score.win=0; score.ties=0; score.loss=0;
-            localStorage.removeItem('score');">Reset score</button>
+            localStorage.removeItem('score'); alert('Score has been reset!');"><img class="image" src="reset.jpg" alt="Reset"></button>
         </div>
     </main>
 
     <script>
         let score = JSON.parse(localStorage.getItem("score"))||{ win: 0, ties: 0, loss: 0 };
 
+        document.getElementById("playBtn").addEventListener("click", function() {
+            document.querySelectorAll(".gameBtn").forEach(btn => btn.disabled = false);
+        });
+
         function playgame(playermove) {
             const computerguess = fun1();
             let result = "";
             const player = playermove.toLowerCase();
             const computer = computerguess.toLowerCase();
+
             if (player === 'rock') {
-                if (computer === 'rock') {
-                    result = 'Tie!';
-                } else if (computer === 'paper') {
-                    result = 'You lose!';
-                } else if (computer === 'scissors') {
-                    result = 'You win!';
-                }
+                if (computer === 'rock') result = 'Tie!';
+                else if (computer === 'paper') result = 'You lose!';
+                else result = 'You win!';
             } else if (player === 'paper') {
-                if (computer === 'rock') {
-                    result = 'You win!';
-                } else if (computer === 'paper') {
-                    result = 'Tie!';
-                } else if (computer === 'scissors') {
-                    result = 'You lose!';
-                }
+                if (computer === 'rock') result = 'You win!';
+                else if (computer === 'paper') result = 'Tie!';
+                else result = 'You lose!';
             } else if (player === 'scissors') {
-                if (computer === 'rock') {
-                    result = 'You lose!';
-                } else if (computer === 'paper') {
-                    result = 'You win!';
-                } else if (computer === 'scissors') {
-                    result = 'Tie!';
-                }
-            } else {
-                result = 'Invalid move!';
+                if (computer === 'rock') result = 'You lose!';
+                else if (computer === 'paper') result = 'You win!';
+                else result = 'Tie!';
             }
-            if(result === 'You win!') {
-                score.win++;
-            } else if(result === 'Tie!') {
-                score.ties++;
-            } else if(result === 'You lose!') {
-                score.loss++;
-            }
+
+            if(result === 'You win!') score.win++;
+            else if(result === 'Tie!') score.ties++;
+            else if(result === 'You lose!') score.loss++;
+
             localStorage.setItem("score", JSON.stringify(score));
-            alert(`You picked ${playermove}, the computer picked ${computerguess}. ${result}
-wins: ${score.win}, ties: ${score.ties}, losses: ${score.loss}`);
+
+            // ✅ fixed alert message
+            alert(`You picked ${playermove}, the computer picked ${computerguess}.
+${result}
+Wins: ${score.win}, Ties: ${score.ties}, Losses: ${score.loss}`);
         }
 
-function fun1() {
-        const randomnum=Math.random();
-        let computerguess = '';
-        if( randomnum>=0 &&randomnum < 1/3){
-            computerguess = 'Rock';
-    } else if( randomnum>=1/3 && randomnum < 2/3){
-        computerguess = 'Paper';
-    } else if( randomnum>=2/3 && randomnum < 1){
-        computerguess = 'Scissors';
-    }
-    return computerguess;
-    
-    }
+        function fun1() {
+            const randomnum=Math.random();
+            if(randomnum < 1/3) return 'Rock';
+            else if(randomnum < 2/3) return 'Paper';
+            else return 'Scissors';
+        }
     </script>
  </body>
  </html>
