@@ -6,9 +6,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        #playBtn{
-            height:80px;
-            width:80px;
+        #playBtn {
+            height: 80px;
+            width: 80px;
         }
         .gameBtn:disabled {
             opacity: 0.5;
@@ -17,29 +17,52 @@
     </style>
 </head>
 <body>
-   
     <main>
         <div class="header1">
             <h1>Rock Paper Scissors</h1>
-            <button  class="play" id="playBtn">Let's Play</button>
         </div>
         <div class="div1">
-            <button class="gameBtn" onclick="playgame('rock');" disabled><img class="image" src="rock.png" alt="Rock"></button>
-            <button class="gameBtn" onclick="playgame('paper');" disabled><img class="image" src="paper.png" alt="Paper"></button>
-            <button class="gameBtn" onclick="playgame('scissors');" disabled><img class="image" src="scissors.png" alt="Scissors"></button>
+            <button class="gameBtn" onclick="playgame('rock');"><img class="image" src="rock.png" alt="Rock"></button>
+            <button class="gameBtn" onclick="playgame('paper');"><img class="image" src="paper.png" alt="Paper"></button>
+            <button class="gameBtn" onclick="playgame('scissors');"><img class="image" src="scissors.png" alt="Scissors"></button>
         </div>
         <div id="but">
             <button onclick="score.win=0; score.ties=0; score.loss=0;
-            localStorage.removeItem('score'); alert('Score has been reset!');"><img class="image" src="reset.jpg" alt="Reset"></button>
+            localStorage.removeItem('score'); updateScoreboard(); alert('Score has been reset!');">
+                <img class="image" src="reset.jpg" alt="Reset">
+            </button>
+        </div>
+        <div id="scoreboard">
+            <h1>SCOREBOARD</h1>
+            <p id="win">WIN:</p>
+            <p id="lose">LOSE:</p>
+            <p id="tie">TIE:</p>
+            <p id="playerMove">Player Move:</p>
+            <p id="computerMove">Computer Guess:</p>
+            <p id="resultText">Result:</p>
         </div>
     </main>
 
     <script>
-        let score = JSON.parse(localStorage.getItem("score"))||{ win: 0, ties: 0, loss: 0 };
+        let score = JSON.parse(localStorage.getItem("score")) || { win: 0, ties: 0, loss: 0 };
 
-        document.getElementById("playBtn").addEventListener("click", function() {
-            document.querySelectorAll(".gameBtn").forEach(btn => btn.disabled = false);
-        });
+        const win = document.querySelector("#win");
+        const lose = document.querySelector("#lose");
+        const tie = document.querySelector("#tie");
+        const playerMoveText = document.querySelector("#playerMove");
+        const computerMoveText = document.querySelector("#computerMove");
+        const resultText = document.querySelector("#resultText");
+
+        function updateScoreboard(player="", computer="", result="") {
+            win.innerText = `WIN: ${score.win}`;
+            lose.innerText = `LOSE: ${score.loss}`;
+            tie.innerText = `TIE: ${score.ties}`;
+            if(player) playerMoveText.innerText = `Player Move: ${player}`;
+            if(computer) computerMoveText.innerText = `Computer Guess: ${computer}`;
+            if(result) resultText.innerText = `Result: ${result}`;
+        }
+
+        updateScoreboard();
 
         function playgame(playermove) {
             const computerguess = fun1();
@@ -66,8 +89,8 @@
             else if(result === 'You lose!') score.loss++;
 
             localStorage.setItem("score", JSON.stringify(score));
+            updateScoreboard(playermove, computerguess, result);
 
-            // ✅ fixed alert message
             alert(`You picked ${playermove}, the computer picked ${computerguess}.
 ${result}
 Wins: ${score.win}, Ties: ${score.ties}, Losses: ${score.loss}`);
@@ -80,5 +103,5 @@ Wins: ${score.win}, Ties: ${score.ties}, Losses: ${score.loss}`);
             else return 'Scissors';
         }
     </script>
- </body>
- </html>
+</body>
+</html>
